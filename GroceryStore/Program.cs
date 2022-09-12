@@ -6,48 +6,73 @@
 // Show what is in the shopping car to the user
 // Ask the user for what they want to buy
 // IF the product the user wants to uy is available
-    // Put the product in the shopping cart
-    // Remove the product from available products
+// Put the product in the shopping cart
+// Remove the product from available products
 // ELSE
-    // Tell the user that the product is not available
-    // 
+// Tell the user that the product is not available
+// 
 
+List<string> warehouse = new();
+warehouse.Add("Old cheese");
+warehouse.Add("Stanky fish");
+warehouse.Add("Rotten tomato");
+List<string> shoppingCart = new();
+List<string> userInventory = new();
 
-string[] warehouse =
-{
-    "old cheese",
-    "stanky fish"
-};
-string[] shoppingCart =
-{
+while(true)
+{ 
+    Console.Clear();
+    WelcomeMessage();
 
-};
-string[] userInventory = {
-    
-};
+    PrintWarehouse();
 
-Print("Welcome to my Gross Store!");
-Print("Here's whats in the store: ");
+    string userInput = Console.ReadLine();
+    if (userInput == "cart")
+    {
+        PrintShoppingcart();
+    }
+    else if (IsProductAvailable(userInput))
+    {
+        MoveProductToShoppingCart(userInput);
+        Print("\n" + userInput + " was added to your cart.");
+    }
+    else
+    {
+        MoveProductFromShoppingCart(userInput);
+        Print("The product you are looking for doesn't exist...");
+    }
 
-PrintWarehouse();
-
-string userInput = Console.ReadLine();
-
-if (IsProductAvailable(userInput))
-{
-    PutProductInShoppingCart(userInput);
+    Console.WriteLine("\nPress enter to continue...");
+    Console.ReadLine();
 }
-else
-{
-    Print("The product you are looking for doesn't exist...");
-}
-
 
 // METHODS
 
-void PutProductInShoppingCart(string product)
+void PrintShoppingcart()
 {
+    if (shoppingCart.Count > 0)
+    {
 
+        Print("Here is your current shoppingcart:");
+        foreach (string item in shoppingCart)
+        {
+            Print(item);
+        }
+    }
+    else
+        Print("Your cart is empty...");
+}
+
+void MoveProductToShoppingCart(string product)
+{
+    warehouse.Remove(product);
+    shoppingCart.Add(product);
+}
+
+void MoveProductFromShoppingCart(string product)
+{
+    shoppingCart.Remove(product);
+    warehouse.Add(product);
 }
 
 bool IsProductAvailable(string product)
@@ -71,4 +96,11 @@ void PrintWarehouse()
 void Print(string msg)
 {
     Console.WriteLine(msg);
+}
+
+void WelcomeMessage()
+{
+    Print("Welcome to my Gross Store!");
+    Print("Enter 'cart' to view your shoppingcart, or 'Old cheese' to buy an old cheese.");
+    Print("Here's whats in the store:\n");
 }
