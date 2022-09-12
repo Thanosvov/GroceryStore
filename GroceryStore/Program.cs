@@ -16,6 +16,8 @@ List<string> warehouse = new();
 warehouse.Add("Old cheese");
 warehouse.Add("Stanky fish");
 warehouse.Add("Rotten tomato");
+warehouse.Add("Smelly egg");
+
 List<string> shoppingCart = new();
 List<string> userInventory = new();
 
