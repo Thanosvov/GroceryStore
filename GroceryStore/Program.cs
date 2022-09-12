@@ -25,6 +25,7 @@ while(true)
     WelcomeMessage();
 
     PrintWarehouse();
+    PrintShoppingcart();
 
     string userInput = Console.ReadLine();
     if (userInput == "cart")
@@ -36,9 +37,13 @@ while(true)
         MoveProductToShoppingCart(userInput);
         Print("\n" + userInput + " was added to your cart.");
     }
-    else
+    else if (IsProductInCart(userInput))
     {
         MoveProductFromShoppingCart(userInput);
+        Print("\n" + userInput + " was removed from your cart.");
+    }
+    else
+    {
         Print("The product you are looking for doesn't exist...");
     }
 
@@ -52,7 +57,7 @@ void PrintShoppingcart()
 {
     if (shoppingCart.Count > 0)
     {
-
+        Console.SetCursorPosition(0, 15);
         Print("Here is your current shoppingcart:");
         foreach (string item in shoppingCart)
         {
@@ -60,7 +65,11 @@ void PrintShoppingcart()
         }
     }
     else
+    {
+        Console.SetCursorPosition(0, 15);
         Print("Your cart is empty...");
+    }
+    Console.WriteLine();
 }
 
 void MoveProductToShoppingCart(string product)
@@ -78,6 +87,16 @@ void MoveProductFromShoppingCart(string product)
 bool IsProductAvailable(string product)
 {
     foreach (string thing in warehouse)
+    {
+        if (thing == product)
+            return true;
+    }
+    return false;
+}
+
+bool IsProductInCart(string product)
+{
+    foreach (string thing in shoppingCart)
     {
         if (thing == product)
             return true;
